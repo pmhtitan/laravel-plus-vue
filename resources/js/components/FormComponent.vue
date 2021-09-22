@@ -4,10 +4,10 @@
                 <div class="card-header">¿En qué estás pensando ahora?</div>
                 <div class="card-body">
 
-                    <form action="">
+                    <form action="" v-on:submit.prevent="NewThought()">
                         <div class="form-group">
                             <label for="thought">Ahora estoy pensando en:</label>
-                            <input type="text" class="form-control" name="thought">
+                            <input type="text" class="form-control" name="thought" v-model="description">
                         </div>
                         <div>
                             <button type="submit" class="btn btn-primary">Enviar pensamiento</button>
@@ -21,8 +21,24 @@
 
 <script>
     export default {
+        data(){
+            return {
+                description: ''
+            }
+        },
         mounted() {
             console.log('Component mounted.')
+        },
+        methods: {
+            NewThought(){
+                const thought = {
+                
+                    description: this.description,
+                    created_at: '22/11/2033'
+                }
+                this.$emit('new', thought);
+                this.description = '';
+            }
         }
     }
 </script>

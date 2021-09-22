@@ -3,9 +3,14 @@
 <div class="row justify-content-center">
     <div class="col-md-8 col-md-offset-2">
 
-        <form-component></form-component>
+        <form-component @new="addThought"></form-component>
 
-        <thought-component v-for="thought in thoughts" :key="thought.id" :thought="thought"></thought-component>
+        <thought-component
+         v-for="(thought, index) in thoughts"
+         :key="thought.id"
+         :thought="thought"
+         @update="updateThought(index, ...arguments)"
+         @delete="deleteThought(index)"></thought-component>
 
     </div>
 </div>
@@ -16,7 +21,7 @@
     export default {
         data() {
             return {
-                thoughts:
+                thoughts:   
                  [
                     {
                     'id' : 1,
@@ -33,6 +38,19 @@
         },
         mounted() {
             console.log('Component mounted.')
+        },
+
+        methods: {
+            addThought(thought) {
+                this.thoughts.push(thought);
+
+            },
+            deleteThought(index){
+                this.thoughts.splice(index, 1);
+            },
+            updateThought(index, thought){
+                this.thoughts[index] = thought;
+            }
         }
     }
 </script>
