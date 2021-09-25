@@ -30,14 +30,24 @@
             console.log('Component mounted.')
         },
         methods: {
-            NewThought(){
-                const thought = {
-                
+            NewThought() {
+                const params = {
+                    description: this.description
+                };
+                this.description = '';
+
+                axios.post('/thoughts', params).then((response) => {
+                    const thought = response.data;
+                    this.$emit('new', thought);
+                    
+                });
+
+                let thought = {
+                    id: 3,
                     description: this.description,
                     created_at: '22/11/2033'
-                }
-                this.$emit('new', thought);
-                this.description = '';
+                };
+                
             }
         }
     }

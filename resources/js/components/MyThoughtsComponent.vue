@@ -21,23 +21,13 @@
     export default {
         data() {
             return {
-                thoughts:   
-                 [
-                    {
-                    'id' : 1,
-                    'description' : 'abc',
-                    'created_at' : '18/09/2021'
-                    },
-                    {
-                    'id' : 2,
-                    'description' : 'dfg',
-                    'created_at' : '20/10/2021'
-                    }
-                ]
+                thoughts: []
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            axios.get('/thoughts').then((response) => {
+                this.thoughts = response.data;
+            })
         },
 
         methods: {

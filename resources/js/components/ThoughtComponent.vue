@@ -1,7 +1,7 @@
 <template>
    <div class="card mt-4">
                 <div class="card-header">
-                    <div class="card-heading">Publicado en {{ thought.created_at }}</div>
+                    <div class="card-heading">Publicado en {{ thought.created_at | moment("d/M/YYYY") }} <span v-if="thought.created_at !== thought.updated_at"> - Última actualización: {{ thought.updated_at | moment("d/M/YYYY")}}</span></div>
                 </div>
                 <div class="card-body">
                     
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+Vue.use(require('vue-moment'));
     export default {
         props: ['thought'],
         data() {
@@ -29,14 +30,20 @@
         },
         methods: {
             onClickDelete(){
-                this.$emit('delete');
+                axios.delete(`/thoughts/${this.thought.id}`).then(() => {
+                    this.$emit('delete');
+                });
+                
             },
             onClickEdit(){
                 this.editMode = true;
             },
             onClickUpdate(){
-                this.editMode = false;
-                this.$emit('update', thought);
+                axios.put(`/thoughts/${this.thought.id}`, this.thought).then((response) => {
+                    this.editMode = false;
+                    const thought = response.data;
+                    this.$emit('update', thought);
+                });               
             }
         }
     }
