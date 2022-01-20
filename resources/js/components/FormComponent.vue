@@ -1,6 +1,6 @@
 <template>
    <div class="card mt-4">
-           <div class="card">
+          
                 <div class="card-header">¿En qué estás pensando ahora?</div>
                 <div class="card-body">
 
@@ -13,9 +13,8 @@
                             <button type="submit" class="btn btn-primary">Enviar pensamiento</button>
                         </div>
                     </form>
-
                 </div>
-            </div>   
+    
     </div>
 </template>
 
